@@ -45,7 +45,7 @@
         <br>
         
      </div>
-     <button>GİRİŞ YAP</button> 
+     <button type="submit">GİRİŞ YAP</button> 
     <br>
    <input type="checkbox" name="Beni hatırla">Beni Hatırla  <br><br>
    <a href="" style="margin-top:10px;">Parolanızı mı unuttunuz?</a><br>
