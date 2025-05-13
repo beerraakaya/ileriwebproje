@@ -33,6 +33,7 @@
     </style>
 </head>
 <body>
+    <form method="POST" action="login.php">
 <div class="login-box">
     <h2 style="text-align: center;">HOŞ GELDİNİZ</h2>
  
@@ -40,8 +41,8 @@
         <label for="email">E-posta adresi: </label>
         <input type="email" name="email" required>
         <br>
-        <label for="şifre" >Parola</label>
-        <input type="password" name="şifre" required>
+        <label for="password" >Parola</label>
+        <input type="password" name="password" required>
         <br>
         
      </div>
@@ -51,7 +52,7 @@
    <a href="" style="margin-top:10px;">Parolanızı mı unuttunuz?</a><br>
    <a href="register.php">Kayıt olun</a>
 </div>
- 
+ </form>
 </body>
 </html>
 
