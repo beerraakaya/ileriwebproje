@@ -3,9 +3,9 @@ Create Table users(
     username VARCHAR(50),
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('kullanici','musteri')NOT NULL,
+    role ENUM('Satici','Musteri')NOT NULL,
     remember_token VARCHAR(255) DEFAULT NULL,
-    reser_token VARCHAR(255) DEFAULT NULL,
+    reset_token VARCHAR(255) DEFAULT NULL,
     is_admin BOOLEAN DEFAULT 0
 );
 

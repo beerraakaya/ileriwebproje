@@ -3,6 +3,7 @@
 require '../config/db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username=$_POST['username'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
@@ -17,10 +18,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message= "Bu e-posta zaten kayıtlı.";
     } else {
         // Yeni kullanıcıyı ekle
-        $stmt = $db->prepare("INSERT INTO users (email, password, is_admin) VALUES (:email, :password, :is_admin)");
+        $stmt = $db->prepare("INSERT INTO users (email, password,role, is_admin) VALUES (:email, :password, :role,:is_admin)");
         $stmt->execute([
+            'username'=>$username,
             'email' => $email,
             'password' => $password,
+            'role'=>$role,
             'is_admin' => $is_admin
         ]);
         $message= "Kayıt başarılı!";
@@ -60,17 +63,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST" action="">
     <h2>KAYIT OL</h2>
     
-   <i class="far fa-envelope"style="font-size: 15px; color: #333;"></i>
-   <input type="email" name="email" placeholder="E-Posta" required><br>
-   <i class="fas fa-lock"></i>
-    <input type="password" name="password" placeholder="Şifre" required style="margin-top: 10px;">
-    <select name="role" id="rol" required style="margin-top: 10px;">
-        
-        <option value="Müşteri">Müşteri</option>
-        <option value="Satıcı">Satıcı</option>
+    <i class="fas fa-user" style="font-size: 15px; color: #333;"></i>
+    <input type="text" name="username" placeholder="İsim" required><br>
 
+   <i class="far fa-envelope" style="font-size: 15px; color: #333;"></i>
+   <input type="email" name="email" placeholder="E-Posta" required><br>
+
+   <i class="fas fa-lock" style="font-size: 15px; color: #333;"></i>
+    <input type="password" name="password" placeholder="Şifre" required style="margin-top: 10px;">
+
+    <select name="role" id="rol" required style="margin-top: 10px;">
+        <option value="Musteri">Müşteri</option>
+        <option value="Satici">Satıcı</option>
     </select>
+
     <button type="submit" style="margin-top: 10px;">Kayıt Ol</button>
+    <a href="index.php">Giriş Yapın</a>
     
     <?php if(isset($message))echo"<divclass='message'>$message<divclass=>"; ?>
 </form>

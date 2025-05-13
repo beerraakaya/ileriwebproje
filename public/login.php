@@ -3,9 +3,10 @@
 session_start();
 require '../config/db.php';
 
+
 if($_SERVER['REQUEST_METHOD']=='POST'){
-    $email=$_POST['email'];
-    $password=$_POST['password'];
+    $email=$_POST['email']?? null;
+    $password=$_POST['password']?? null;
     $remember=isset($_POST['remember']);
 
     $stmt=$db->prepare("SELECT * FROM users WHERE email= :email");
@@ -26,10 +27,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     }
 
     
-    if ($users['is_admin']) {
-        header("Location: admin_panel.php");
-    } else {
-        header("Location: dashboard.php");
+    if (isset($_SESSION['user_id'])) {
+        header("Location: users_panel.php");
+    } else{
+        echo " Şifreniz yanlış";
     }
     exit;
     } 
