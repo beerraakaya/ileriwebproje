@@ -48,8 +48,7 @@
      </div>
      <button type="submit">GİRİŞ YAP</button> 
     <br>
-   <input type="checkbox" name="Beni hatırla">Beni Hatırla  <br><br>
-   <a href="" style="margin-top:10px;">Parolanızı mı unuttunuz?</a><br>
+   <input type="checkbox" name="Beni hatırla">Beni Hatırla  <br>
    <a href="register.php">Kayıt olun</a>
 </div>
  </form>

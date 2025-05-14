@@ -19,12 +19,16 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
 
     if ($kullanici && password_verify($eski,$kullanici['password'])){
         $hashed= password_hash($yeni,PASSWORD_DEFAULT);
-        $stmt=$db->prepare("UPDATE users SET password= :password WHERE id=:id");
-        $stmt->execute(['password'=> $hashed, 'id'=> $user_id]);
+        $stmt=$db->prepare("UPDATE users SET password= ? WHERE id=?");
+        $stmt->execute([$hashed,$user_id]);
 
         echo "Şifreniz Başarı ile Değiştirildi.";
+        header("Location: index.php");
+        exit();
     }else{
         echo "Eski Şifreniz Hatalı !";
+        header("Location: user_functions.php?error=wrong");
+        exit();
     }
 }
 
@@ -65,6 +69,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </style>
 </head>
 <body>
+    <?php if(isset($_GET['error'])&& $_GET['error']=='wrong')?>
+    <script>
+        alert("Eski şifreniz yanlış. Lütfen tekrar deneyiniz.");
+    </script>
+    
     <form method="POST" action="">
         <div>
             <label for="">Eski Şifre: </label> <input type="password" name="eski_sifre" required><br>

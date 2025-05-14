@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     if ($users && password_verify($password, $users['password'])) {
     $_SESSION['user_id'] = $users['id'];
     $_SESSION['role'] = $users['role'];
-    $_SESSION['is_admin'] = $users['is_admin']; // Yeni
+    $_SESSION['is_admin'] = $users['is_admin']; 
 
     if ($remember) {
         $token = bin2hex(random_bytes(16));

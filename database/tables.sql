@@ -17,3 +17,13 @@ Create Table products(
     image VARCHAR(255)
 );
 
+Create Table password_resets(
+    id INT AUTO_INCREMENT PRIMARY KEY
+    user_id INT NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    suresi DATETIME NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+

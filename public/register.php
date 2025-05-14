@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $role = $_POST['role'];
 
     // Varsayılan olarak admin değil
-    $is_admin = 0;
+   // $is_admin = 0;
 
     // E-posta daha önce kullanılmış mı kontrol et
     $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
