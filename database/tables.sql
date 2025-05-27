@@ -12,18 +12,19 @@ Create Table users(
 Create Table products(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
-    description TEXT,
-    price DECIMAL(10.2),
-    image VARCHAR(255)
+    aciklama TEXT,
+    fiyat DECIMAL(10.2) NOT NULL,
+    image VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-Create Table password_resets(
-    id INT AUTO_INCREMENT PRIMARY KEY
-    user_id INT NOT NULL,
-    token VARCHAR(64) NOT NULL,
-    suresi DATETIME NOT NULL,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-
-    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+CREATE TABLE urunler (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    kullanici_id INT,
+    urun_adi VARCHAR(255),
+    aciklama TEXT,
+    fiyat DECIMAL(10,2),
+    resim_yolu VARCHAR(255),
+    eklenme_tarihi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

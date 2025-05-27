@@ -8,16 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
 
-    // Varsayılan olarak admin değil
-   // $is_admin = 0;
-
-    // E-posta daha önce kullanılmış mı kontrol et
+    // E-posta kontrol ediyoruz
     $stmt = $db->prepare("SELECT * FROM users WHERE email = :email");
     $stmt->execute(['email' => $email]);
     if ($stmt->rowCount() > 0) {
         $message= "Bu e-posta zaten kayıtlı.";
     } else {
-        // Yeni kullanıcıyı ekle
+        // Yeni kullanıcı
         $stmt = $db->prepare("INSERT INTO users (email, password,role, is_admin) VALUES (:email, :password, :role,:is_admin)");
         $stmt->execute([
             'username'=>$username,
@@ -64,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h2>KAYIT OL</h2>
     
     <i class="fas fa-user" style="font-size: 15px; color: #333;"></i>
-    <input type="text" name="username" placeholder="İsim" required><br>
+    <input type="text" name="username" placeholder="İsim" required> <br>
 
    <i class="far fa-envelope" style="font-size: 15px; color: #333;"></i>
    <input type="email" name="email" placeholder="E-Posta" required><br>
@@ -78,7 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </select>
 
     <button type="submit" style="margin-top: 10px;">Kayıt Ol</button>
-    <a href="index.php">Giriş Yapın</a>
+    <a href="index.php">Giriş Yapın</a> 
+    <br>
     
     <?php if(isset($message))echo"<divclass='message'>$message<divclass=>"; ?>
 </form>

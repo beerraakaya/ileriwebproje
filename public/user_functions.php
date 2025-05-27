@@ -22,21 +22,22 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         $stmt=$db->prepare("UPDATE users SET password= ? WHERE id=?");
         $stmt->execute([$hashed,$user_id]);
 
-        echo "Şifreniz Başarı ile Değiştirildi.";
-        header("Location: index.php");
+        echo "<script>alert('Şifreniz Başarı ile Değiştirildi. Tekrar Giriş Yapınız.');
+        window.location.href='index.php';
+        </script>";
+        //header("Location: index.php");
         exit();
     }else{
         echo "Eski Şifreniz Hatalı !";
         header("Location: user_functions.php?error=wrong");
         exit();
     }
-}
-
-
-
-?>
-
-
+}?>
+ <?php if(isset($_GET['error'])&& $_GET['error']=='wrong'){
+    echo "<script>alert('Eski şifreniz yanlış. Lütfen tekrar deneyiniz');</script>";
+ }
+ ?>
+   
 
 <!DOCTYPE html>
 <html lang="tr">
@@ -69,10 +70,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     </style>
 </head>
 <body>
-    <?php if(isset($_GET['error'])&& $_GET['error']=='wrong')?>
-    <script>
-        alert("Eski şifreniz yanlış. Lütfen tekrar deneyiniz.");
-    </script>
+    
     
     <form method="POST" action="">
         <div>
@@ -87,5 +85,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <button type="submit">Şifreyi Güncelle</button>
         </div>
     </form>
+    
 </body>
 </html>
