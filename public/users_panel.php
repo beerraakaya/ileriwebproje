@@ -2,8 +2,8 @@
 
 require '../config/db.php';
 require 'login.php';
-$urunsorgu=$db->prepare("SELECT * FROM urunler where kullanici_id=:id ");
-$urunsorgu->execute(['id' => $_SESSION['user_id']]);
+$urunsorgu=$db->prepare("SELECT * FROM urunler WHERE aktif = 1 ORDER BY id DESC");
+$urunsorgu->execute();
 $urunler=$urunsorgu->fetchAll(PDO::FETCH_ASSOC);
 
 if (isset($_SESSION['user_id'])) {
@@ -60,16 +60,33 @@ if (isset($_SESSION['user_id'])) {
             
         }
 
-        .urunliste{
-            margin-top: 20px ;
+        .urunliste{ 
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: left;
+        
         }
 
         .urun{
+            display: inline-block;
             border: 1px solid #ccc;
             padding: 10px;
             margin: 10px 0;
             border-radius: 8px;
             background-color: #fff;
+            width: fit-content;
+            text-align: center;
+        }
+        .urun img{
+            width: 225px; ;
+            height: 225px; ;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
         #profilebox p{
             text-align: left;
@@ -99,7 +116,7 @@ if (isset($_SESSION['user_id'])) {
                 <label for="">Açıklama</label><br>
                 <textarea name="aciklama" id="" required></textarea><br><br>
 
-                <button type="submit">Satışa Çıkar</button>
+                <button type="submit">Tanıtıma Çıkar</button>
                 <button type="button" onclick="formgizle()">İptal</button>
             </form>
             </div>
@@ -116,11 +133,16 @@ if (isset($_SESSION['user_id'])) {
            
             <div class="urunliste">
                 <?php foreach($urunler as $urun):?>
-                <div class="urun">
+                <div class="urun" style="background-color: antiquewhite" data-id="<?=$urun['id']?>">
                     <img src="<?php echo htmlspecialchars($urun['resim_yolu']);?>" alt="Ürün Görseli">
                     <h4><?php echo htmlspecialchars($urun['urun_adi']) ;?></h4>
                     <p><?php echo htmlspecialchars($urun['aciklama']);?></p>
-                    <strong><?php echo number_format($urun['fiyat'],3)?>TL</strong>
+                    <strong><?php echo number_format($urun['fiyat'],3)?>TL</strong><br>
+
+                   
+                        <input type="hidden" name="urun_id" value="<?=$urun['id']?>">
+                        <button type="submit" onclick="urunsil(<?=$urun['id']?>)" style="margin-top: 5px; padding: 3px;">Tanıtımdan kaldır </button>
+                    
                 </div>
                 <?php endforeach; ?>
               
@@ -149,8 +171,34 @@ if (isset($_SESSION['user_id'])) {
         })
         function formgizle(){
             addurun.style.display='none';
+        } 
+        function urunsil(id){
+            if(!confirm("ÜRÜNÜ SİLMEK İSTEDİĞİNE EMİN MİSİN")) return;
+
+            fetch("delete_product.php",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "urun_id="+encodeURIComponent(id)
+            })
+            .then(response=>response.text())
+            .then(data=>{
+                const urunDiv= document.querySelector('[data-id="'+id+'"]');
+                if(urunDiv){
+                    urunDiv.remove();
+                }
+
+                alert(data);
+            })
+            .catch(error=>{
+                console.error("Hata:",error);
+                alert("Bir hata oluştu ürün silinemedi");
+            });
         }
        
+       
+        
     </script>
 </body>
 </html>

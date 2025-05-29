@@ -2,7 +2,8 @@
 session_start();
 require '../config/db.php';
 
-$urunad_=$_POST['urun_adi'];
+
+$urunad_=$_POST['urunad_'];
 $aciklama=$_POST['aciklama'];
 $fiyat=$_POST['fiyat'];
 
@@ -19,8 +20,8 @@ if($_FILES['resim']['error']===0){
     die("görsel yüklenemedi.");
 }
 
-$stmt=$db->prepare("INSERT INTO urunler(id,urun_adi,aciklama,fiyat,resim_yolu) VALUES (?,?,?,?,?)");
-$stmt->execute([$id,$urunad_,$aciklama,$fiyat,$yol]);
+$stmt=$db->prepare("INSERT INTO urunler(urun_adi,aciklama,fiyat,resim_yolu) VALUES (?,?,?,?)");
+$stmt->execute([$urunad_,$aciklama,$fiyat,$yol]);
 
 header("location: users_panel.php");
 exit;
