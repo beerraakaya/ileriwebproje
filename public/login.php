@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+include("auth_check.php");
 require '../config/db.php';
 
 

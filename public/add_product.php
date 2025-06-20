@@ -1,4 +1,5 @@
 <?php
+include("auth_check.php");
 session_start();
 require '../config/db.php';
 
@@ -25,10 +26,5 @@ $stmt->execute([$urunad_,$aciklama,$fiyat,$yol]);
 
 header("location: users_panel.php");
 exit;
-
-
-
-
-
 
 ?>

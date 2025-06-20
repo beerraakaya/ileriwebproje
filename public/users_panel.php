@@ -1,5 +1,5 @@
 <?php
-
+include("auth_check.php");
 require '../config/db.php';
 require 'login.php';
 $urunsorgu=$db->prepare("SELECT * FROM urunler WHERE aktif = 1 ORDER BY id DESC");
